@@ -2,7 +2,11 @@
 #ifndef GEO_CONFIG_H
 #define GEO_CONFIG_H
 
-#include "cpl_config.h"
+#ifndef CMAKE_CONFIG
+	#include "cpl_config.h"
+#else
+	#include "cmake_config.h"
+#endif
 
 #ifndef COVERITY_SCAN
 #include "cpl_string.h"
