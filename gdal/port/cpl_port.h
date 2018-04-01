@@ -62,8 +62,11 @@
 #    define _CRT_NONSTDC_NO_DEPRECATE
 #  endif
 #endif
-
-#include "cpl_config.h"
+#ifndef CMAKE_CONFIG
+	#include "cpl_config.h"
+#else
+    #include "cmake_config.h"
+#endif
 
 /* ==================================================================== */
 /*      A few sanity checks, mainly to detect problems that sometimes   */
