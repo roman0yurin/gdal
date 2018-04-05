@@ -8,6 +8,9 @@
 //Эти зависимости из модулей
 #define HAVE_SFCGAL
 #define HAVE_GEOS
+#define HAVE_PG
+#define HAVE_LIBJPEG
+#define INTERNAL_PNG
 //Интеграция с Mapinfo может пригодиться
 #define HAVE_MITAB
 

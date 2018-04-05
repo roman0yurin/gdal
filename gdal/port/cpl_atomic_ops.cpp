@@ -29,7 +29,11 @@
 
 #include "cpl_atomic_ops.h"
 
-#include "cpl_config.h"
+#ifndef CMAKE_CONFIG
+    #include "cpl_config.h"
+#else
+    #include "cmake_config.h"
+#endif
 
 // TODO: If C++11, use #include <atomic>.
 

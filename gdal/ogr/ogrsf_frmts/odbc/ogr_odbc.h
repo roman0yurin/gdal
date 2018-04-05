@@ -31,7 +31,7 @@
 #define OGR_ODBC_H_INCLUDED
 
 #include "ogrsf_frmts.h"
-#include "cpl_odbc.h"
+#include "cpl_odbc.h.rem"
 #include "cpl_error.h"
 
 /************************************************************************/

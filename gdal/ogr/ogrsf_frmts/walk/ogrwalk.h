@@ -31,7 +31,7 @@
 #define OGRWALK_H_INCLUDED
 
 #include "ogrsf_frmts.h"
-#include "cpl_odbc.h"
+#include "cpl_odbc.h.rem"
 #include "cpl_error.h"
 #include "ogis_geometry_wkb_struct.h"
 #include "ogr_pgeo.h"

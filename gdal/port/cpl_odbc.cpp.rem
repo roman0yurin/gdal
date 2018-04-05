@@ -29,7 +29,7 @@
 
 #include <wchar.h>
 
-#include "cpl_odbc.h"
+#include "cpl_odbc.h.rem"
 #include "cpl_vsi.h"
 #include "cpl_string.h"
 #include "cpl_error.h"

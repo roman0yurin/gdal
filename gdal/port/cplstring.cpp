@@ -36,7 +36,11 @@
 #include <cstring>
 #include <string>
 
+#ifndef CMAKE_CONFIG
 #include "cpl_config.h"
+#else
+#include "cmake_config.h"
+#endif
 #include "cpl_conv.h"
 
 #if !defined(va_copy) && defined(__va_copy)

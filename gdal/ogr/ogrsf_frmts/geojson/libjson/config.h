@@ -123,4 +123,8 @@
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
 
-#include <cpl_config.h>
+#ifndef CMAKE_CONFIG
+	#include "cpl_config.h"
+#else
+	#include "cmake_config.h"
+#endif
