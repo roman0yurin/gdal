@@ -73,7 +73,11 @@
 #endif
 #include <string>
 
-#include "cpl_config.h"
+#ifndef CMAKE_CONFIG
+    #include "cpl_config.h"
+#else
+    #include "cmake_config.h"
+#endif
 #include "cpl_multiproc.h"
 #include "cpl_string.h"
 #include "cpl_vsi.h"

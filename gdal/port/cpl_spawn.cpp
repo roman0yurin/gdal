@@ -31,7 +31,11 @@
 
 #include <cstring>
 
+#ifndef CMAKE_CONFIG
 #include "cpl_config.h"
+#else
+#include "cmake_config.h"
+#endif
 #include "cpl_conv.h"
 #include "cpl_error.h"
 #include "cpl_multiproc.h"

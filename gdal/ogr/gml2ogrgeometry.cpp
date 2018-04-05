@@ -60,7 +60,7 @@
 CPL_CVSID("$Id$");
 
 #if HAVE_CXX11
-constexpr const double kdfD2R = (3.1415926535897931e+0 / 1.8e+2);
+constexpr double kdfD2R = 0.017453292519943295; //По какой-то непонятной причине компилятор не воспринимал это как константу M_PI / 180.0;
 constexpr double kdf2PI = 2.0 * M_PI;
 #else
 static const double kdfD2R = M_PI / 180.0;

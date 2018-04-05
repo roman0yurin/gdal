@@ -55,7 +55,11 @@
 #include <cstdlib>
 #include <cstring>
 
+#ifndef CMAKE_CONFIG
 #include "cpl_config.h"
+#else
+#include "cmake_config.h"
+#endif
 #include "cpl_multiproc.h"
 #include "cpl_vsi.h"
 

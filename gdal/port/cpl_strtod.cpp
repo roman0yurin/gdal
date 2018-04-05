@@ -36,7 +36,11 @@
 #include <cstdlib>
 #include <limits>
 
+#ifndef CMAKE_CONFIG
 #include "cpl_config.h"
+#else
+#include "cmake_config.h"
+#endif
 
 CPL_CVSID("$Id$");
 
