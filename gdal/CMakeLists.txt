@@ -78,7 +78,7 @@ endforeach()
 file(GLOB_RECURSE GDAL_SRC_R RELATIVE "${CMAKE_GDAL_SOURCE_DIR}" ${RECUSIVE_SRC})
 file(GLOB GDAL_SRC_N RELATIVE "${CMAKE_GDAL_SOURCE_DIR}" ${NONE_RECUSIVE_SRC})
 
-include_directories(
+set(GDAL_INCLUDE_DIRS
 		${CMAKE_GDAL_SOURCE_DIR}/gen_include
 		${CMAKE_GDAL_SOURCE_DIR}/alg
 		${CMAKE_GDAL_SOURCE_DIR}/apps
@@ -109,6 +109,8 @@ include_directories(
 		${CMAKE_GDAL_SOURCE_DIR}/ogr/ogrsf_frmts/pgdump
 		${CMAKE_GDAL_SOURCE_DIR}/ogr/ogrsf_frmts/shape
 )
+set_property(GLOBAL PROPERTY GDAL_INCLUDE_DIRS ${GDAL_INCLUDE_DIRS})
+include_directories(${GDAL_INCLUDE_DIRS})
 
 configure_file("${CMAKE_GDAL_SOURCE_DIR}/config.h.in" ${CMAKE_GDAL_SOURCE_DIR}/gen_include/cmake_config.h)
 #Включаем CMake конфигурацию вместо make
