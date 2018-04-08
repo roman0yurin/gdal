@@ -29,6 +29,12 @@
 
 #ifndef OGR_EXPATH_INCLUDED
 #define OGR_EXPATH_INCLUDED
+#ifndef CMAKE_CONFIG
+#include "cpl_config.h"
+#else
+#include "cmake_config.h"
+#endif
+
 
 #ifdef HAVE_EXPAT
 
@@ -52,7 +58,8 @@
 
 /* Only for internal use ! */
 XML_Parser CPL_DLL OGRCreateExpatXMLParser(void);
-
+#else
+static_assert(false, "REQUIRED EXPAT");
 #endif /* HAVE_EXPAT */
 
 #endif /* OGR_EXPATH_INCLUDED */
