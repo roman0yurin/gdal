@@ -29,6 +29,12 @@
 
 #ifndef OGR_EXPATH_INCLUDED
 #define OGR_EXPATH_INCLUDED
+#ifndef CMAKE_CONFIG
+#include "cpl_config.h"
+#else
+#include "cmake_config.h"
+#endif
+
 
 #ifdef HAVE_EXPAT
 
@@ -69,6 +75,8 @@ struct CPL_DLL OGRExpatUniquePtrDeleter
  */
 using OGRExpatUniquePtr = std::unique_ptr<XML_ParserStruct, OGRExpatUniquePtrDeleter>;
 
+#else
+static_assert(false, "REQUIRED EXPAT");
 #endif /* HAVE_EXPAT */
 
 #endif /* OGR_EXPATH_INCLUDED */

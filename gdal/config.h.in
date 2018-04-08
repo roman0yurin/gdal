@@ -13,7 +13,9 @@
 #define INTERNAL_PNG
 //Интеграция с Mapinfo может пригодиться
 #define HAVE_MITAB
-
+#define INTERNAL_LIBGEOTIFF
+//Подключаем внешний парсер EXPAT
+#define HAVE_EXPAT
 //Чтобы не мучаться с 20-ти тысячными скриптами пока берем генерацию как есть под Linux, при необходимости уточняем через CMake
 ///------------------------------------------------------------------------------------------------------------------------------////
 /* port/cpl_config.h.  Generated from cpl_config.h.in by configure.  */
