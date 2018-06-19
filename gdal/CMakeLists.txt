@@ -124,7 +124,7 @@ add_definitions(-DCMAKE_CONFIG)
 add_library(gdal STATIC ${GDAL_SRC_R} ${GDAL_SRC_N})
 ##Модульные зависимости
 #add_dependencies(gdal SFCGAL)
-target_link_libraries(gdal pq sfcgal geos)
+target_link_libraries(gdal pq sfcgal geos-static)
 add_dependencies(gdal installPostgresDb)
 ##Берем заголовки напрямую из модуля GEOS
 get_property(GEOS_INCLUDE_DIRS GLOBAL PROPERTY GEOS_INCLUDE_DIRS)
