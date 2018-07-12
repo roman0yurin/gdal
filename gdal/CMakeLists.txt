@@ -4,6 +4,9 @@ set(CMAKE_GDAL_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(CMAKE_GDAL_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
 set(CMAKE_MODULE_PATH ${CMAKE_GDAL_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 
+get_property(POSTGRES_SRC_DIR GLOBAL PROPERTY POSTGRES_SRC_DIR)
+get_property(POSTGRES_BIN_DIR GLOBAL PROPERTY POSTGRES_BIN_DIR)
+
 #Папки с рекурсивным включением исходников
 list(APPEND RECUSIVE_SRC_DIR
 	/gcore
@@ -125,7 +128,6 @@ add_library(gdal STATIC ${GDAL_SRC_R} ${GDAL_SRC_N})
 ##Модульные зависимости
 #add_dependencies(gdal SFCGAL)
 target_link_libraries(gdal pq sfcgal geos-static)
-add_dependencies(gdal installPostgresDb)
 ##Берем заголовки напрямую из модуля GEOS
 get_property(GEOS_INCLUDE_DIRS GLOBAL PROPERTY GEOS_INCLUDE_DIRS)
 message("GEOS DIRS ${GEOS_INCLUDE_DIRS}")
@@ -135,9 +137,7 @@ get_property(SFCGAL_INCLUDE_DIRS GLOBAL PROPERTY SFCGAL_INCLUDE_DIRS)
 message("SFCGAL DIRS ${SFCGAL_INCLUDE_DIRS}")
 include_directories(${SFCGAL_INCLUDE_DIRS})
 
-get_property(POSTGRES_INCLUDE_DIRS GLOBAL PROPERTY POSTGRES_INCLUDE_DIRS)
-message("Postgres DIRS ${POSTGRES_INCLUDE_DIRS}")
-include_directories(${POSTGRES_INCLUDE_DIRS})
+include_directories(${POSTGRES_SRC_DIR}/src/include ${POSTGRES_SRC_DIR}/src/interfaces/libpq)
 
 #Добавление внешней библиотеки CURL
 find_package(CURL REQUIRED)
