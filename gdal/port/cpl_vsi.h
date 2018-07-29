@@ -60,6 +60,11 @@
 #  include <unistd.h>
 #endif
 
+#ifdef __MINGW32__
+    #define __need_size_t
+    #include <stddef.h>
+#endif
+
 /* Windows */
 #include <sys/stat.h>
 

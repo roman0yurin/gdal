@@ -45,7 +45,7 @@
 // LD_PRELOAD=./vsipreload.so sqlite3 /vsicurl/http://download.osgeo.org/gdal/data/sqlite3/polygon.db "select * from polygon limit 10"
 // LD_PRELOAD=./vsipreload.so ls -al /vsicurl/http://download.osgeo.org/gdal/data/sqlite3
 // LD_PRELOAD=./vsipreload.so find /vsicurl/http://download.osgeo.org/gdal/data/sqlite3
-
+#ifdef __linux__
 #define _GNU_SOURCE 1
 #define _LARGEFILE64_SOURCE 1
 #include <stdio.h>
@@ -1741,3 +1741,4 @@ int lgetfilecon(const char *path, /*security_context_t **/ void* con)
     }
     return ret;
 }
+#endif //linux

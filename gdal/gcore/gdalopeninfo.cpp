@@ -193,7 +193,7 @@ retry:  // TODO(schwehr): Stop using goto.
             if( VSI_ISDIR( sStat.st_mode ) )
                 bIsDirectory = TRUE;
         }
-#ifdef HAVE_READLINK
+#if HAVE_READLINK
         else if ( !bHasRetried && !STARTS_WITH(pszFilename, "/vsi") )
         {
             // If someone creates a file with "ln -sf

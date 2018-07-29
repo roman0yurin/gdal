@@ -7,6 +7,10 @@ set(CMAKE_MODULE_PATH ${CMAKE_GDAL_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 get_property(POSTGRES_SRC_DIR GLOBAL PROPERTY POSTGRES_SRC_DIR)
 get_property(POSTGRES_BIN_DIR GLOBAL PROPERTY POSTGRES_BIN_DIR)
 
+if(WIN32)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lpsapi")
+endif()
+
 #Папки с рекурсивным включением исходников
 list(APPEND RECUSIVE_SRC_DIR
 	/gcore

@@ -458,7 +458,7 @@ static bool LoadPythonAPI()
         }
     }
 
-#elif defined(WIN32)
+#elif defined(WIN32) &&  !defined(__MINGW32__)
 
     // First try in the current process in case the python symbols would
     // be already loaded

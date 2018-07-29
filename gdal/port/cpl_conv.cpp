@@ -2786,7 +2786,7 @@ CPLLocaleC::~CPLLocaleC()
 CPLThreadLocaleC::CPLThreadLocaleC()
 
 {
-#ifdef HAVE_USELOCALE
+#if HAVE_USELOCALE
     nNewLocale = newlocale(LC_NUMERIC_MASK, "C", NULL);
     nOldLocale = uselocale(nNewLocale);
 #else
@@ -2817,7 +2817,7 @@ CPLThreadLocaleC::CPLThreadLocaleC()
 CPLThreadLocaleC::~CPLThreadLocaleC()
 
 {
-#ifdef HAVE_USELOCALE
+#if HAVE_USELOCALE
     uselocale(nOldLocale);
     freelocale(nNewLocale);
 #else

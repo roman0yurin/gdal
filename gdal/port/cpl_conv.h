@@ -314,7 +314,7 @@ public:
     ~CPLThreadLocaleC();
 
 private:
-#ifdef HAVE_USELOCALE
+#if HAVE_USELOCALE
     locale_t nNewLocale;
     locale_t nOldLocale;
 #else

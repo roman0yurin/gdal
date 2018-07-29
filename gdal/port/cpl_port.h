@@ -120,6 +120,8 @@
 /* Latest versions of mingw32 define it, but with older ones, */
 /* we need to define it manually */
 #if defined(__MINGW32__)
+#include <stddef.h>
+#define DBL_EPSILON __DBL_EPSILON__
 #ifndef __MSVCRT_VERSION__
 #define __MSVCRT_VERSION__ 0x0700
 #endif
@@ -425,7 +427,7 @@ typedef unsigned int  GUIntptr_t;
 #ifdef HAVE_ICONV
 #include <iconv.h>
 #endif
-#ifdef HAVE_MMAP
+#if HAVE_MMAP
 #include <sys/mman.h>
 #endif
 #include <signal.h>
@@ -1118,7 +1120,7 @@ int snprintf(char *str, size_t size, const char* fmt, ...)
 int sprintf(char *str, const char* fmt, ...)
     CPL_PRINT_FUNC_FORMAT(2, 3)
     CPL_WARN_DEPRECATED("Use CPLsnprintf() instead");
-#  elif defined(GDAL_COMPILATION) && !defined(DONT_DEPRECATE_SPRINTF)
+#  elif defined(GDAL_COMPILATION) && !defined(DONT_DEPRECATE_SPRINTF) && !defined(__MINGW32__)
 int sprintf(char *str, const char* fmt, ...)
     CPL_PRINT_FUNC_FORMAT(2, 3)
     CPL_WARN_DEPRECATED("Use snprintf() or CPLsnprintf() instead");
