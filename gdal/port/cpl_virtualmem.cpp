@@ -66,7 +66,7 @@ CPL_CVSID("$Id$")
 #define HAVE_VIRTUAL_MEM_VMA
 #endif
 
-#if defined(HAVE_MMAP) || defined(HAVE_VIRTUAL_MEM_VMA)
+#if HAVE_MMAP || defined(HAVE_VIRTUAL_MEM_VMA)
 #include <unistd.h>     // read, write, close, pipe, sysconf
 #include <sys/mman.h>   // mmap, munmap, mremap
 #endif
@@ -1997,7 +1997,7 @@ void CPLVirtualMemManagerTerminate( void ) {}
 
 #endif  // HAVE_VIRTUAL_MEM_VMA
 
-#ifdef HAVE_MMAP
+#if HAVE_MMAP
 
 /************************************************************************/
 /*                     CPLVirtualMemFreeFileMemoryMapped()              */
@@ -2005,10 +2005,14 @@ void CPLVirtualMemManagerTerminate( void ) {}
 
 static void CPLVirtualMemFreeFileMemoryMapped( CPLVirtualMem* ctxt )
 {
+#if HAVE_MMAP
     const size_t nMappingSize =
         ctxt->nSize + static_cast<GByte*>(ctxt->pData) - static_cast<GByte*>(ctxt->pDataToFree);
     const int nRet = munmap(ctxt->pDataToFree, nMappingSize);
     IGNORE_OR_ASSERT_IN_DEBUG(nRet == 0);
+#else
+    assert(false); //Доступно только в linux сборке
+#endif
 }
 
 /************************************************************************/
@@ -2023,6 +2027,7 @@ CPLVirtualMemFileMapNew( VSILFILE* fp,
                          CPLVirtualMemFreeUserData pfnFreeUserData,
                          void *pCbkUserData )
 {
+
 #if SIZEOF_VOIDP == 4
     if( nLength != static_cast<size_t>(nLength) )
     {
@@ -2146,7 +2151,7 @@ CPLVirtualMem *CPLVirtualMemFileMapNew(
 
 size_t CPLGetPageSize( void )
 {
-#if defined(HAVE_MMAP) || defined(HAVE_VIRTUAL_MEM_VMA)
+#if HAVE_MMAP || defined(HAVE_VIRTUAL_MEM_VMA)
     return static_cast<size_t>( sysconf(_SC_PAGESIZE) );
 #else
     return 0;
@@ -2159,7 +2164,7 @@ size_t CPLGetPageSize( void )
 
 int CPLIsVirtualMemFileMapAvailable( void )
 {
-#ifdef HAVE_MMAP
+#if HAVE_MMAP
     return TRUE;
 #else
     return FALSE;
@@ -2184,7 +2189,7 @@ void CPLVirtualMemFree( CPLVirtualMem* ctxt )
         return;
     }
 
-#ifdef HAVE_MMAP
+#if HAVE_MMAP
     if( ctxt->eType == VIRTUAL_MEM_TYPE_FILE_MEMORY_MAPPED )
         CPLVirtualMemFreeFileMemoryMapped(ctxt);
 #endif

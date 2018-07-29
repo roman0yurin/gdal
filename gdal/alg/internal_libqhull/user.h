@@ -25,6 +25,7 @@ Code flags --
 */
 
 #include <time.h>
+#include "cpl_conv.h"
 
 #ifndef qhDEFuser
 #define qhDEFuser 1

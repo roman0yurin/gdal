@@ -3005,7 +3005,7 @@ CPLLocaleC::~CPLLocaleC()
 /*                        CPLThreadLocaleCPrivate                       */
 /************************************************************************/
 
-#ifdef HAVE_USELOCALE
+#if HAVE_USELOCALE
 
 class CPLThreadLocaleCPrivate
 {
