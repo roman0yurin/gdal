@@ -944,60 +944,60 @@ FILE *freopen( const char *path, const char *mode, FILE *stream )
 /*                              open()                                  */
 /************************************************************************/
 
-int open( const char *path, int flags, ... )
-{
-    myinit();
-    int DEBUG_VSIPRELOAD_COND = GET_DEBUG_VSIPRELOAD_COND(path);
-    if( DEBUG_VSIPRELOAD && !osCurDir.empty() && path[0] != '/' )
-        DEBUG_VSIPRELOAD_COND = 1;
-    if( DEBUG_VSIPRELOAD_COND )
-    {
-        if( !osCurDir.empty() && path[0] != '/' )
-            fprintf(stderr, "open(%s)\n",
-                    CPLFormFilename(osCurDir.c_str(), path, NULL));
-        else
-            fprintf(stderr, "open(%s)\n", path);
-    }
-
-    va_list args;
-    va_start(args, flags);
-    mode_t mode = va_arg(args, mode_t);
-    int fd = 0;
-    if( !osCurDir.empty() && path[0] != '/' &&
-        (flags & 3) == O_RDONLY && (flags & O_DIRECTORY) != 0 )
-    {
-        VSIStatBufL sStatBufL;
-        char* newname =
-            const_cast<char *>(CPLFormFilename(osCurDir.c_str(), path, NULL));
-        if( strchr(osCurDir.c_str(), '/') != NULL && strcmp(path, "..") == 0 )
-        {
-            char* lastslash = strrchr(newname, '/');
-            if( lastslash != NULL )
-            {
-                *lastslash = 0;
-                lastslash = strrchr(newname, '/');
-                if( lastslash != NULL )
-                    *lastslash = 0;
-            }
-        }
-        if( VSIStatL(newname, &sStatBufL) == 0 &&
-            S_ISDIR(sStatBufL.st_mode) )
-        {
-            fd = open("/dev/zero", O_RDONLY);
-            CPLLockHolderD(&hLock, LOCK_RECURSIVE_MUTEX)
-            oMapDirFdToName[fd] = newname;
-        }
-        else
-            fd = -1;
-    }
-    else if( STARTS_WITH(path, "/vsi") )
-        fd = VSIFopenHelper(path, flags);
-    else
-        fd = pfnopen(path, flags, mode);
-    va_end(args);
-    if( DEBUG_VSIPRELOAD_COND ) fprintf(stderr, "open(%s) = %d\n", path, fd);
-    return fd;
-}
+//int open( const char *path, int flags, ... )
+//{
+//    myinit();
+//    int DEBUG_VSIPRELOAD_COND = GET_DEBUG_VSIPRELOAD_COND(path);
+//    if( DEBUG_VSIPRELOAD && !osCurDir.empty() && path[0] != '/' )
+//        DEBUG_VSIPRELOAD_COND = 1;
+//    if( DEBUG_VSIPRELOAD_COND )
+//    {
+//        if( !osCurDir.empty() && path[0] != '/' )
+//            fprintf(stderr, "open(%s)\n",
+//                    CPLFormFilename(osCurDir.c_str(), path, NULL));
+//        else
+//            fprintf(stderr, "open(%s)\n", path);
+//    }
+//
+//    va_list args;
+//    va_start(args, flags);
+//    mode_t mode = va_arg(args, mode_t);
+//    int fd = 0;
+//    if( !osCurDir.empty() && path[0] != '/' &&
+//        (flags & 3) == O_RDONLY && (flags & O_DIRECTORY) != 0 )
+//    {
+//        VSIStatBufL sStatBufL;
+//        char* newname =
+//            const_cast<char *>(CPLFormFilename(osCurDir.c_str(), path, NULL));
+//        if( strchr(osCurDir.c_str(), '/') != NULL && strcmp(path, "..") == 0 )
+//        {
+//            char* lastslash = strrchr(newname, '/');
+//            if( lastslash != NULL )
+//            {
+//                *lastslash = 0;
+//                lastslash = strrchr(newname, '/');
+//                if( lastslash != NULL )
+//                    *lastslash = 0;
+//            }
+//        }
+//        if( VSIStatL(newname, &sStatBufL) == 0 &&
+//            S_ISDIR(sStatBufL.st_mode) )
+//        {
+//            fd = open("/dev/zero", O_RDONLY);
+//            CPLLockHolderD(&hLock, LOCK_RECURSIVE_MUTEX)
+//            oMapDirFdToName[fd] = newname;
+//        }
+//        else
+//            fd = -1;
+//    }
+//    else if( STARTS_WITH(path, "/vsi") )
+//        fd = VSIFopenHelper(path, flags);
+//    else
+//        fd = pfnopen(path, flags, mode);
+//    va_end(args);
+//    if( DEBUG_VSIPRELOAD_COND ) fprintf(stderr, "open(%s) = %d\n", path, fd);
+//    return fd;
+//}
 
 /************************************************************************/
 /*                             open64()                                 */
