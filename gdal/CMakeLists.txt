@@ -129,9 +129,10 @@ configure_file("${CMAKE_GDAL_SOURCE_DIR}/config.h.in" ${CMAKE_GDAL_SOURCE_DIR}/g
 #Включаем CMake конфигурацию вместо make
 add_definitions(-DCMAKE_CONFIG)
 add_library(gdal STATIC ${GDAL_SRC_R} ${GDAL_SRC_N})
+set_property(TARGET gdal PROPERTY POSITION_INDEPENDENT_CODE ON)
 ##Модульные зависимости
 #add_dependencies(gdal SFCGAL)
-target_link_libraries(gdal pq sfcgal geos-static)
+target_link_libraries(gdal sfcgal geos-static)
 ##Берем заголовки напрямую из модуля GEOS
 get_property(GEOS_INCLUDE_DIRS GLOBAL PROPERTY GEOS_INCLUDE_DIRS)
 message("GEOS DIRS ${GEOS_INCLUDE_DIRS}")
