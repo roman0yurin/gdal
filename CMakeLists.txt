@@ -6,12 +6,6 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_CXX_STANDARD 11)
 
-##Добавки на время отладки
-add_subdirectory(../geos ${CMAKE_CURRENT_BINARY_DIR}/geos)
-add_subdirectory(../cgal ${CMAKE_CURRENT_BINARY_DIR}/cgal)
-add_subdirectory(../sfcgal ${CMAKE_CURRENT_BINARY_DIR}/sfcgal)
-add_subdirectory(../postgres ${CMAKE_CURRENT_BINARY_DIR}/postgres)
-
 add_subdirectory(gdal)
 
 

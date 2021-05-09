@@ -26,6 +26,8 @@
  * DEALINGS IN THE SOFTWARE.
  ****************************************************************************/
 
+#include "cmake_config.h"
+
 #ifdef HAVE_EXPAT
 
 #include "cpl_port.h"

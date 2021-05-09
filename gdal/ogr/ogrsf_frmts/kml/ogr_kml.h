@@ -32,6 +32,7 @@
  ****************************************************************************/
 #ifndef OGR_KML_H_INCLUDED
 #define OGR_KML_H_INCLUDED
+#include "cmake_config.h"
 
 #include "ogrsf_frmts.h"
 

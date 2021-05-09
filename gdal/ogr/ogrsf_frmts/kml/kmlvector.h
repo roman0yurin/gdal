@@ -28,6 +28,7 @@
  ****************************************************************************/
 #ifndef OGR_KMLVECTOR_H_INCLUDED
 #define OGR_KMLVECTOR_H_INCLUDED
+#include "cmake_config.h"
 
 #ifdef HAVE_EXPAT
 

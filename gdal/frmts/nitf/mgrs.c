@@ -85,6 +85,7 @@
 /*
  *                               INCLUDES
  */
+#include "cmake_config.h"
 #include <ctype.h>
 #include <math.h>
 #include <stdio.h>

@@ -29,7 +29,7 @@
  ****************************************************************************/
 #ifndef OGR_KMLUTILITY_H_INCLUDED
 #define OGR_KMLUTILITY_H_INCLUDED
-
+#include "cmake_config.h"
 #include <string>
 #include <vector>
 #include "ogr_geometry.h"

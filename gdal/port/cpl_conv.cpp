@@ -26,7 +26,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  ****************************************************************************/
-
+#include "cmake_config.h"
 // For uselocale, define _XOPEN_SOURCE = 700
 // but on Solaris, we don't have uselocale and we cannot have
 // std=c++11 with _XOPEN_SOURCE != 600
@@ -3236,7 +3236,7 @@ int CPLCheckForFile( char *pszFilename, char **papszSiblingFiles )
 /*      Stub implementation of zip services if we don't have libz.      */
 /************************************************************************/
 
-#if !defined(HAVE_LIBZ)
+#ifndef HAVE_LIBZ
 
 void *CPLCreateZip( const char *, char ** )
 

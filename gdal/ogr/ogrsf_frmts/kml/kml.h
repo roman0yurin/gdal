@@ -29,6 +29,7 @@
  ****************************************************************************/
 #ifndef OGR_KML_KML_H_INCLUDED
 #define OGR_KML_KML_H_INCLUDED
+#include "cmake_config.h"
 
 #ifdef HAVE_EXPAT
 

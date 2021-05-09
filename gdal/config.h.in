@@ -6,16 +6,16 @@
 //Компиляция основы GDAL всегда нужна
 #define GDAL_COMPILATION
 //Эти зависимости из модулей
-#define HAVE_SFCGAL
-#define HAVE_GEOS
-#define HAVE_PG
-#define HAVE_LIBJPEG
+#cmakedefine HAVE_SFCGAL
+#cmakedefine HAVE_GEOS
+#cmakedefine HAVE_PG
+#cmakedefine HAVE_LIBJPEG
 #define INTERNAL_PNG
 //Интеграция с Mapinfo может пригодиться
 #define HAVE_MITAB
 #define INTERNAL_LIBGEOTIFF
 //Подключаем внешний парсер EXPAT
-#define HAVE_EXPAT
+#cmakedefine HAVE_EXPAT
 
 #ifdef __linux__
 /* Define to 1 if you have the `posix_memalign' function. */
@@ -291,4 +291,5 @@
 /* Define to 1 if you have the `std::isnan' function. */
 #define HAVE_STD_IS_NAN 1
 
-
+/**ZIP добавляется за счет реализации из port/cpl_minizip_zip.cpp**/
+#define HAVE_LIBZ 1
