@@ -59,6 +59,14 @@ int main( int argc, char* argv[] ){
     int scale = sxfFile.oSXFPassport.nScale;
     cout << "Масштаб листа:  1:" << scale << "\n";
 
+    /** Имя листа карты */
+    string mapSheetName = sxfFile.oSXFPassport.sMapSheetName;
+    cout << "Имя листа карты: " << mapSheetName << "\n";
+
+    /** Номенклатура листа */
+    string mapSheet = sxfFile.oSXFPassport.sMapSheet;
+    cout << "Номенклатура листа: " << mapSheet << "\n";
+
 
     //int opt = sxfFile.Reference() ; // Увеличение счётчика ссылок набора данных на 1
 

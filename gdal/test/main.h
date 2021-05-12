@@ -27,11 +27,29 @@
  *      bIsInternal (bool)
  *      bSuppressOnClose (bool)
  *      m_oMapFieldDomains.
- *      
+ *      oOvManager.
+ *      papszOpenOptions (char ** | 0x0) NULL
+ *      m_poStyleTable (OGRStyleTable * | 0x0) NULL
  *
  *
  *  oSXFPassport.  -  Паспорт SXF файла
+ *    version (GUInt32) (4)
  *    dtCrateDate.  -  Дата создания набора данных
+ *      nYear (GUInt16) - год
+ *      nMonth (GUInt16) - месяц
+ *      nDay (GUInt16) - день
+ *    sMapSheet.(string)    -  Номенклатура листа
+ *    nScale (GUInt32)  - Масштаб листа
+ *    sMapSheetName.(string) - Имя листа карты
+ *    informationFlags.  -  Информационные флажки
+ *      bProjectionDataCompliance (bool) - Соответствие проекционных данных ???
+ *      bRealCoordinatesCompliance (bool) - Флаг наличия реальных координат
+ *      stCodingType (SXFCodingType) (SXF_SEM_DEC) - Флаг способа кодирования 2 бита
+ *      stGenType (SXFGeneralizationType) - Таблица генерализации 1 бит
+ *      stEnc (SXFTextEncoding) SXF_ENC_WIN - Флаг кодировки текстов подписей объектов (1 байт)
+ *      stCoordAcc (SXFCoordinatesAccuracy) - Флаг точности координат (1 байт):
+ *      bSort (bool) - Признак специальной сортировки данных
+ *    stMapDescription.  -  Описание карты ()
  *
  *  pszName.
  *    std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >  --- Путь к файлу
