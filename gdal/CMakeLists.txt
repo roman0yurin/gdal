@@ -35,6 +35,7 @@ list(APPEND RECUSIVE_SRC_DIR
 	/apps
 	/gnm
 	/port
+	/ogr/ogrsf_frmts/sxf
 	/ogr/ogrsf_frmts/avc
 	/ogr/ogrsf_frmts/cad
 	/ogr/ogrsf_frmts/csv
@@ -53,6 +54,7 @@ list(APPEND RECUSIVE_SRC_DIR
 	/ogr/ogrsf_frmts/svg
 	/ogr/ogrsf_frmts/xplane
 	/ogr/ogrsf_frmts/vrt
+	/test
 )
 
 #Исключаемые из сборки исходники, относительный путь
@@ -211,6 +213,7 @@ set(GDAL_INCLUDE_DIRS
 		${CMAKE_GDAL_SOURCE_DIR}/frmts/grib/degrib/g2clib
 		${CMAKE_GDAL_SOURCE_DIR}/ogr/ogrsf_frmts/vrt
 		${CMAKE_GDAL_SOURCE_DIR}/ogr/ogrsf_frmts/gml
+		${CMAKE_GDAL_SOURCE_DIR}/test
 )
 
 set_property(GLOBAL PROPERTY GDAL_INCLUDE_DIRS ${GDAL_INCLUDE_DIRS})
@@ -224,7 +227,7 @@ add_library(gdal STATIC ${SOURCES_LIST})
 set_property(TARGET gdal PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 #Добавляем тест для проверки GDAL
-add_executable(VitaliyTest ${SOURCES_LIST} main.cpp)
+add_executable(VitaliyTest ${SOURCES_LIST})
 set_property(TARGET VitaliyTest PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 #Добавление внешней библиотеки CURL

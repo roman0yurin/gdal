@@ -107,7 +107,6 @@ private:
 
 class OGRSXFDataSource final: public OGRDataSource
 {
-    SXFPassport oSXFPassport;
 
     CPLString               pszName;
 
@@ -140,6 +139,8 @@ public:
 
     virtual int             TestCapability( const char * ) override;
     void                    CloseFile();
+
+    SXFPassport oSXFPassport;
 };
 
 /************************************************************************/
