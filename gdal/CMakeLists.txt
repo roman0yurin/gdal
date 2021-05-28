@@ -250,7 +250,7 @@ target_link_libraries(gdal ${EXPAT_LIBRARIES})
 target_link_libraries(VitaliyTest ${EXPAT_LIBRARIES})
 
 
-#Добавляем библиотеку прекций LibPoj4
+#Добавляем библиотеку прекций LibProj4
 find_package(Proj REQUIRED)
 include_directories(${PROJ_INCLUDE_DIR})
 #При необходимости можно добавить ее и к статичесой библиотеке, если она не собирается из исходников

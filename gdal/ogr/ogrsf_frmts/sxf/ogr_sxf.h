@@ -109,7 +109,7 @@ class OGRSXFDataSource final: public OGRDataSource
 {
 
     CPLString               pszName;
-
+    SXFPassport         oSXFPassport;
     OGRLayer**          papoLayers;
     size_t              nLayers;
 
@@ -140,7 +140,7 @@ public:
     virtual int             TestCapability( const char * ) override;
     void                    CloseFile();
 
-    SXFPassport oSXFPassport;
+
 };
 
 /************************************************************************/
