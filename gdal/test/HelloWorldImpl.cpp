@@ -2,7 +2,7 @@
 // Created by vitaliy on 5/24/21.
 //
 
-#include "helloWorld.h"
+#include "HelloWorldImpl.h"
 #include <cstdio>
 #include <ctime>
 
@@ -14,16 +14,22 @@ using namespace std;
 
 
 
-string HelloWorld::getHelloWorld() {
+
+string HelloWorldImpl::getHelloWorld() {
     string hString2(hstr); // Строка из константы класса
     string hString( " ======================================================  GDAL  -  This Hello World String"); // Строка - создание
-    return hString ;
+    return hString2 ;
 }
 
 
 
 void testHelloWorld(){
-    HelloWorld testHW;
+    HelloWorldImpl testHW;
     cout << "testHelloWorld(): " << testHW.getHelloWorld();
 };
+
+/** Используем "умный" указатель */
+std::shared_ptr<dgn::aircraft::HelloWorld> dgn::aircraft::HelloWorld::create(){
+   return std::shared_ptr<dgn::aircraft::HelloWorld>(new HelloWorldImpl() );
+}
 

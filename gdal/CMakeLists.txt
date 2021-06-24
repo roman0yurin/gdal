@@ -214,6 +214,8 @@ set(GDAL_INCLUDE_DIRS
 		${CMAKE_GDAL_SOURCE_DIR}/ogr/ogrsf_frmts/vrt
 		${CMAKE_GDAL_SOURCE_DIR}/ogr/ogrsf_frmts/gml
 		${CMAKE_GDAL_SOURCE_DIR}/test
+		${CMAKE_GDAL_SOURCE_DIR}/ogr/ogrsf_frmts
+
 )
 
 set_property(GLOBAL PROPERTY GDAL_INCLUDE_DIRS ${GDAL_INCLUDE_DIRS})
@@ -224,6 +226,7 @@ configure_file("${CMAKE_GDAL_SOURCE_DIR}/config.h.in" ${CMAKE_GDAL_SOURCE_DIR}/g
 add_definitions(-DCMAKE_CONFIG)
 
 add_library(gdal STATIC ${SOURCES_LIST})
+target_link_libraries(gdal ${PROJ_LIBRARY}) # ===============  Добавляем библиотеку
 set_property(TARGET gdal PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 #Добавляем тест для проверки GDAL

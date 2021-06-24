@@ -10,9 +10,12 @@
 #include <iostream>
 #include <fstream>
 
-#include "helloWorld.h"
 
-#include <sxf/ogr_sxf.h>
+
+#include "sxf/ogr_sxf.h"
+
+
+
 
 //#include "../../gdal/ogr/ogrsf_frmts/pgeo/ogrpgeolayer.cpp"
 
@@ -48,8 +51,8 @@ int main( int argc, char* argv[] ){
     for(int  i = 0; i < quaLayer; i++){
         /** Читаем слой */
         sxfLayer = sxfFile.GetLayer(i);
-        /** Стартуем итератор - чтение данных (OGRFeature*) открытого листа карты */
-        auto iter = sxfLayer->begin();
+        /** Стартуем итератор по записям слоя - чтение данных (OGRFeature*) */
+        auto fIter = sxfLayer->begin();
 
         /** Счётчик записей */
         GIntBig RecordsCount = sxfLayer->GetFeatureCount();
@@ -64,10 +67,10 @@ int main( int argc, char* argv[] ){
         for(int i = 0; i < RecordsCount; i++) {
 
             /** Количество полей в записи */
-            int fieldCount = (*iter)->GetFieldCount();
+            int fieldCount = (*fIter)->GetFieldCount();
 
             /** Итератор по полям записи */
-            auto fieldIter = (*iter)->begin();
+            auto fieldIter = (*fIter)->begin();
 
             cout << i <<" fieldCount: " << fieldCount << "\n";
 
@@ -105,51 +108,202 @@ int main( int argc, char* argv[] ){
 
 
             /** Геометрия */
-            auto ref = (*iter)->GetGeometryRef()->toLineString();
-            (*iter)->GetGeomFieldCount();
-            (*iter)->GetGeomFieldIndex("");
-            (*iter)->GetGeomFieldRef(1); //
+            auto ref = (*fIter)->GetGeometryRef()->toLineString();
+            (*fIter)->GetGeomFieldCount();
+            (*fIter)->GetGeomFieldIndex("");
+            (*fIter)->GetGeomFieldRef(1); //
 
             cout << "\n";
 
             /** Ссылка на геометрию  */
-            OGRGeometry* geom = (*iter)->GetGeometryRef();
+            OGRGeometry* geomRef = (*fIter)->GetGeometryRef();
 
+            /** Размер геометрии в WKB формате */
+            auto wkbSize = geomRef->WkbSize();
+            cout << "\n |" <<" wkbSize: " << to_string(wkbSize) << "\n   ";
 
             /** Тип геометрии в виде 1001, 1002, 1004, 1005 */
-            auto wathType = (*iter)->StealGeometry()  ;
+            auto wathType = (*fIter)->StealGeometry()  ;
             cout << " |" <<" wathType: " << wathType->getIsoGeometryType() << "\n   ";
 
 
-            cout << " |" <<" GetGeometryRef(): " << (*iter)->GetGeometryRef() << "   ";
+            cout << " |" << " GetGeometryRef(): " << (*fIter)->GetGeometryRef() << "   ";
             /** количество полей геометрии */
-            cout << " |" <<" GetGeomFieldCount(): " << (*iter)->GetGeomFieldCount() << "   ";
+            cout << " |" << " GetGeomFieldCount(): " << (*fIter)->GetGeomFieldCount() << "   ";
             /** Имя геометрии */
-            cout << " |" <<" getGeometryName(): " << geom->getGeometryName() << "  ";
+            cout << " |" << " getGeometryName(): " << geomRef->getGeometryName() << "  ";
 
             /** Тип геометрии */
-            auto geomType = geom->getGeometryType();
+            auto geomType = geomRef->getGeometryType();
 
+            /** Указатель на размещение поля геометрии */
+            OGRGeometry* geomFieldRef = (*fIter)->GetGeomFieldRef(0);
+
+            /** Селектор по типу геометрии */
             string a;
             switch (geomType) {
-                case wkbPoint25D:{a = "wkbPoint25D"; break;}
-                case wkbLineString25D:{a = "wkbLineString25D"; break;}
-                case wkbPolygon25D:{a = "wkbPolygon25D"; break;}
-                case wkbMultiPoint25D:{a = "wkbMultiPoint25D"; break;}
-                case wkbMultiLineString25D:{a = "wkbMultiLineString25D"; break;}
+                case wkbPoint25D:{
+                    a = "wkbPoint25D";
+
+                    cout << "\n |" << " getM: " << to_string(geomRef->toPoint()->getM()) << "\n  ";
+                    cout << " |" << " getX: " << to_string(geomRef->toPoint()->getX()) << "\n  ";
+                    cout << " |" << " getY: " << to_string(geomRef->toPoint()->getY()) << "\n  ";
+                    cout << " |" << " getZ: " << to_string(geomRef->toPoint()->getZ()) << "\n  ";
+                    break;
+                }
+                case wkbLineString25D:{
+                    a = "wkbLineString25D";
+                    cout << "\n |" << " NumPoints: " << to_string(geomRef->toLineString()->getNumPoints()) << "\n  ";
+                    cout << " |" << " GeometryName: " << geomRef->toLineString()->getGeometryName() << "\n  ";
+
+                    /** Цикл(итератор) по точкам линии */
+                    for(auto pointIter = geomRef->toLineString()->begin();
+                            pointIter != geomRef->toLineString()->end(); ++pointIter){
+                        cout << " |" <<" getM: " << to_string((*pointIter).getM()) << "\n  ";
+                        cout << " |" <<" getX: " << to_string((*pointIter).getX()) << "\n  ";
+                        cout << " |" <<" getY: " << to_string((*pointIter).getY()) << "\n  ";
+                        cout << " |" <<" getZ: " << to_string((*pointIter).getZ()) << "\n  ";
+                    }
+                    break;
+                }
+                case wkbPolygon25D:{
+                    a = "wkbPolygon25D";
+
+                    /** количество встроенных полигонов, ноль или больше. */
+                    int numInteriorRings = geomRef->toPolygon()->getNumInteriorRings();
+                    cout << "\n |" << " Встроено : " << numInteriorRings << "\n  ";
+
+                    /** итератор по полям геометрии  полигона */
+                    int numIter = 0;
+                    for(auto poligonIter = geomRef->toPolygon()->begin(); poligonIter != geomRef->toPolygon()->end(); ++poligonIter){
+
+                        cout << "|" << " numInter : " << numIter << "\n  ";
+
+                        /** тип геометрии поля полигона */
+                        cout << "|" << " inputGeometryType : " << (*poligonIter)->getGeometryType() << "\n  ";
+                        int poligonFieldType = (*poligonIter)->getGeometryType();
+                        cout << "|" << " inputGeometryType : " << OGRGeometryTypeToName((*poligonIter)->getGeometryType()) << "\n  ";
+
+                        /** Длина линии полигона */
+                        cout << "|" << " Length : " << to_string((*poligonIter)->get_Length()) << "\n  ";
+
+                        /** Простой контейнер для ограничивающей области (прямоугольник) (*poligonIter)->getEnvelope(); */
+                        /** Возвращает TRUE, если кривая замкнута (*poligonIter)->get_IsClosed() */
+
+
+                        /** количество точек */
+                        (*poligonIter)->getNumPoints();
+                        cout << "|" << " точек : " << (*poligonIter)->getNumPoints() << "\n  ";
+
+                        /**  Цикл по точкам координат  */
+                        int pNum = 0;
+                        for(auto pointIter = (*poligonIter)->begin(); pointIter != (*poligonIter)->end(); ++pointIter){
+                            cout << " |" <<" pNum: " << pNum << "\n  ";
+                            cout << " |" <<" getM: " << to_string((*pointIter).getM()) << "\n  ";
+                            cout << " |" <<" getX: " << to_string((*pointIter).getX()) << "\n  ";
+                            cout << " |" <<" getY: " << to_string((*pointIter).getY()) << "\n  ";
+                            cout << " |" <<" getZ: " << to_string((*pointIter).getZ()) << "\n  ";
+                            pNum++;
+                        }
+
+                    }
+
+                    break;
+                }
+                case wkbMultiPoint25D:{
+                    a = "wkbMultiPoint25D";
+                    int mPointCount = geomRef->toMultiPoint()->getNumGeometries();
+                    cout << "\n|" << " точек : " << mPointCount << "\n  ";
+
+                    int pNum = 0;
+
+                    /** Цикл по полям multiPoint */
+                    for(auto pointIter = geomRef->toMultiPoint()->begin();
+                            pointIter != geomRef->toMultiPoint()->end(); ++pointIter){
+                        cout << " |" <<" pNum: " << pNum << "\n  ";
+                        cout << " |" <<" getM: " << to_string((*pointIter)->getM()) << "\n  ";
+                        cout << " |" <<" getX: " << to_string((*pointIter)->getX()) << "\n  ";
+                        cout << " |" <<" getY: " << to_string((*pointIter)->getY()) << "\n  ";
+                        cout << " |" <<" getZ: " << to_string((*pointIter)->getZ()) << "\n  ";
+                        pNum++;
+                    }
+
+
+
+                    break;
+                }
+                case wkbMultiLineString25D:{
+                    a = "wkbMultiLineString25D";
+
+                    /** Длина мультилинии */
+                    cout << "\n |" << " Length: " << to_string(geomRef->toMultiLineString()->get_Length()) << "\n  ";
+
+                    cout << " |" << " GeometryName: " << geomRef->toMultiLineString()->getGeometryName() << "\n  ";
+                    cout << " |" << " NumGeometries: " << geomRef->toMultiLineString()->getNumGeometries() << "\n  ";
+
+                    /** Итератор по полям геометрии MultiLineString */
+                    for(auto gIter = geomRef->toMultiLineString()->begin(); gIter != geomRef->toMultiLineString()->end(); ++gIter){
+
+                        /** Количество точек линии */
+                        int pointCount = (*gIter)->getNumPoints();
+                        cout << "\n |" << " NumPoints: " << pointCount << "\n  ";
+
+                        int pNum = 0; // номер точки
+                        /** Цикл по точкам координат */
+                        for(auto pointIter = (*gIter)->begin(); pointIter != (*gIter)->end(); ++pointIter){
+                            cout << " |" <<" pNum: " << pNum << "\n  ";
+                            cout << " |" <<" getM: " << to_string((*pointIter).getM()) << "\n  ";
+                            cout << " |" <<" getX: " << to_string((*pointIter).getX()) << "\n  ";
+                            cout << " |" <<" getY: " << to_string((*pointIter).getY()) << "\n  ";
+                            cout << " |" <<" getZ: " << to_string((*pointIter).getZ()) << "\n  ";
+                            pNum++;
+                        }
+
+                        /** Площадь замкнутая кривой */
+                        double area = (*gIter)->get_Area();
+
+                        /** Получить размерность координат в этом объекте. Вернет 2 или 3. */
+                        int coordinateDimension = (*gIter)->getCoordinateDimension();
+
+                    }
+
+                    break;
+                }
                 case wkbMultiPolygon25D:{a = "wkbMultiPolygon25D"; break;}
                 case wkbGeometryCollection25D:{a = "wkbGeometryCollection25D"; break;}
                 default:{a="UnknownType"; break;}
             }
             cout << " |" <<" GeometryType: " << a << "\n  ";
 
-            cout << " |" <<" geom->WkbSize() " << geom->WkbSize() << "\n  ";
-            cout << " |" <<" geom->getDimension() " << geom->getDimension() << "\n  ";
-            cout << " |" <<" exportToKML(): " << geom->exportToKML() << "\n  ";
+            cout << " |" << " geomRef->WkbSize() " << geomRef->WkbSize() << "\n  ";
+            cout << " |" << " geomRef->getDimension() " << geomRef->getDimension() << "\n  ";
+            cout << " |" << " exportToKML(): " << geomRef->exportToKML() << "\n  ";
+
+            /** Проверяет, находится ли геометрический объект в пределах переданной геометрии
+            * @param poOtherGeom - геометрия для сравнения с этой геометрией */
+//            geomRef->Within(0);
+
+            /** Поиск поля геометрии по имени */
+//            int geomFieldIndex = (*fIter)->GetGeomFieldIndex(0);
+
+            /** вернуть тип геометрии, соответствующий ISO SQL / MM Part3 */
+//            int isoSqlType = geomFieldRef->getIsoGeometryType();
+
+
+
 
             /** topic Стиль элемента ??? */
+//            (*fIter)->GetStyleTable();
+//            (*fIter)->GetStyleString();
+//            /** Получить название стиля по строке стиля */
+//            (*fIter)->GetStyleTable()->GetStyleName("0");
+//            /** Получить следующую строку стиля из таблицы */
+//            (*fIter)->GetStyleTable()->GetNextStyle();
+//            /** Получить имя стиля последней строки стиля, полученной с помощью OGR_STBL_GetNextStyle */
+//            (*fIter)->GetStyleTable()->GetLastStyleName();
 
-            iter.operator++();
+
+            ++fIter; // итератор по записям слоя
 
             cout << "\n";
         }
@@ -204,7 +358,7 @@ int main( int argc, char* argv[] ){
     sxfFile.CloseFile()  ;  // Закрываем файл
 
 
-    testHelloWorld();
+
 
 
     return 0;
