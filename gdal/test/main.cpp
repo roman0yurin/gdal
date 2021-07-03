@@ -30,8 +30,8 @@ int main( int argc, char* argv[] ){
     /** объект класса */
     OGRSXFDataSource sxfFile;
     /** Путь к файлу */
-//    char path[] = "/home/vitaliy/develop/GDAL_Panorama/Maps/K371.sxf";
-    char path[] = "/home/vitaliy/develop/GDAL_Panorama/Maps/K362.sxf";
+    char path[] = "";
+//    char path[] = "/home/vitaliy/develop/GDAL_Panorama/Maps/K362.sxf";
 //    char path[] = "/home/vitaliy/develop/GDAL_Panorama/Maps/K372.sxf";
 //    char path[] = "/home/vitaliy/develop/GDAL_Panorama/Maps/L364.sxf";
 //    char path[] = "/home/vitaliy/develop/GDAL_Panorama/Maps/L362.sxf";

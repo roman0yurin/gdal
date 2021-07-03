@@ -16,7 +16,7 @@ using namespace std;
 
 void testHelloWorld();
 
-class HelloWorldImpl : public dgn::aircraft::HelloWorld {
+class HelloWorldImpl : public dgn::panorama::HelloWorld {
 
 public:
 

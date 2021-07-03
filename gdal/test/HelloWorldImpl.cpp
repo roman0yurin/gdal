@@ -29,7 +29,7 @@ void testHelloWorld(){
 };
 
 /** Используем "умный" указатель */
-std::shared_ptr<dgn::aircraft::HelloWorld> dgn::aircraft::HelloWorld::create(){
-   return std::shared_ptr<dgn::aircraft::HelloWorld>(new HelloWorldImpl() );
+std::shared_ptr<dgn::panorama::HelloWorld> dgn::panorama::HelloWorld::create(){
+   return std::shared_ptr<dgn::panorama::HelloWorld>(new HelloWorldImpl() );
 }
 
