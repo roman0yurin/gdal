@@ -227,6 +227,7 @@ add_definitions(-DCMAKE_CONFIG)
 
 add_library(gdal STATIC ${SOURCES_LIST})
 target_link_libraries(gdal ${PROJ_LIBRARY}) # ===============  Добавляем библиотеку
+message(">>>>>>>!!!! ${PROJ_LIBRARY}")
 set_property(TARGET gdal PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 #Добавляем тест для проверки GDAL
@@ -257,7 +258,6 @@ target_link_libraries(VitaliyTest ${EXPAT_LIBRARIES})
 find_package(Proj REQUIRED)
 include_directories(${PROJ_INCLUDE_DIR})
 #При необходимости можно добавить ее и к статичесой библиотеке, если она не собирается из исходников
-message(">>>>>>> ${PROJ_LIBRARY}")
 target_link_libraries(VitaliyTest ${PROJ_LIBRARY})
 
 
